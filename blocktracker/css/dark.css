@@ -1,0 +1,301 @@
+.divDomClass {
+    height:14px;
+    background-color: #fff;
+}
+
+.whoToFollowParentNode {
+    background: #fff;
+}
+
+.asidesClass {
+    background: rgb(247, 249, 249);
+}
+
+@media (prefers-color-scheme: dark) {
+    .divDomClass {
+        height:14px;
+        background-color: initial;
+    }
+
+    .whoToFollowParentNode {
+        background: #242424;
+    }
+
+    .asidesClass {
+        background: #242424;
+    }
+
+    .g-pop-dom::before {
+        border-top: 4px solid #fff;
+        border-left: 4px solid #fff;
+    }
+
+    .g-pop-dom::after {
+        border-top: 4px solid #fff;
+        border-left: 4px solid #fff;
+    }
+
+    .g-left-append * {
+        color: #fff;
+    }
+
+    .g-left-append .m-address-project>div{
+        border: 1px solid #fff;
+        box-shadow: 0px 0px 2px #fff;
+    }
+
+    .g-left-append .m-address-project .m-icon {
+        border: 1px solid #fff;
+        box-shadow: -1px 0px 1px #fff;
+    }
+
+    .g-left-append .m-address-project .m-content {
+        color: #fff;
+    }
+
+    .g-left-append .m-address-project .m-address{
+        background-color: #A2B2ED;
+    }
+    
+    .g-left-append .m-address-project .m-project{
+        background-color: #6AB0E6;
+    }
+
+    .g-left-append ul li::before{
+        background-color: #fff;
+    }
+
+    .g-left-append ul span{
+        color: #1D9BF0;
+    }
+
+    .g-left-append ul .m-rate{
+        background-color: #388858;
+        border: 1px solid #EBEBEB;
+        box-shadow: 0px 0px 1px #fff;
+    }
+
+    .g-left-append ul .m-rate-red{
+        background-color: #C2505E;
+    }
+
+    .g-layers-append {
+        border-left: 1px dotted #fff;
+        color: #fff !important;
+    }
+
+    .g-layers-append p {
+        color: #fff;
+    }
+
+    .g-layers-append .m-timeline-time p{
+        color: #fff;
+    }
+
+    .g-layers-append .m-timeline-line {
+        border-left: 1px solid #ddd;
+    }
+
+    .g-layers-append .m-timeline-item img{
+        border: 1px solid #fff;
+        box-shadow: 0px 0px 1px #999;
+    }
+
+    .g-layers-append .m-timeline-item span {
+        color: #1D9BF0;
+    }
+
+    .g-items-pop-mask .m-close {
+        background-color: #0f1419;
+        box-shadow: 0px 0px 2px #fff;
+    }
+
+    .g-items-pop {
+        background-color: #0f1419;
+        box-shadow: 0px 0px 4px #fff;
+    }
+
+    .g-items-pop .m-user-avatar {
+        border: 1px solid #fff;
+        box-shadow: 0px 0px 1px #999;
+        background-color: #fff;
+    }
+
+    .g-items-pop .m-items-item {
+        color: #1D9BF0;
+    }
+
+    .g-items-pop-mask-homePage .m-close {
+        background-color: #0f1419;
+        box-shadow: 0px 0px 2px #fff;
+    }
+
+    .g-items-pop-homePage {
+        background-color: #0f1419;
+        box-shadow: 0px 0px 4px #fff;
+    }
+
+    .g-items-pop-homePage .m-user-avatar {
+        border: 1px solid #fff;
+        box-shadow: 0px 0px 1px #999;
+        background-color: #fff;
+    }
+
+    .g-items-pop-homePage .m-items-item {
+        color: #1D9BF0;
+    }
+
+    .g-home-page-append {
+        box-shadow: 0px 0px 4px #aaa;
+        background: #0f1419;
+    }
+
+    .g-operation-discord:hover {
+        background-color: #eee;
+    }
+
+    .g-operation-discord .g-discord {
+        background-color: #F7F7F7;
+        color: #fff;
+        box-shadow: 0 0 4px #aaa;
+    }
+
+    .g-rate-tip {
+        background: rgba(0, 0, 0, 0.7);
+        color: #fff;
+        box-shadow: 0px 0px 2px #fff;
+    }
+
+    .g-nav-alert:hover .nav-inner {
+        background-color: #0f1419;
+    }
+
+    .g-nav-alert .nav-inner-active {
+        background-color: #242424;
+    }
+
+    .g-nav-alert .nav-alert-text {
+        color: #fff;
+    }
+
+    .g-alert-feed {
+        border-left: 1px solid #2f3336;
+        border-right: 1px solid #2f3336;
+        color: #fff;
+    }
+
+    .g-alert-feed .feed-model-title {
+        background-color: initial;
+    }
+
+    .g-feed-item {
+        border-bottom: 1px solid  #2f3336;
+    }
+
+    .g-feed-item .m-img-wrapper {
+        background-color: #fff;
+    }
+
+    .g-feed-item .m-img-noborder {
+        background-color: initial !important;
+    }
+
+    .g-feed-item .feed-content .m-timeline-time .m-text-gray {
+        color: #fff;
+    }
+
+    .g-feed-item .feed-content h3 {
+        color: #fff;
+    }
+
+    .g-feed-item .feed-content h3 a{
+        color: #fff;
+    }
+
+    .g-feed-item .feed-content h3 .u-follow {
+        color: #fff;
+    }
+
+    .g-feed-item .feed-content h3 .u-color-follow {
+        background: #1D9BF0;
+    }
+
+    .g-feed-item .feed-content h3 .u-color-return {
+        background: #FFAC33;
+    }
+
+    .g-feed-item .feed-summary-item {
+        color: #fff;
+    }
+
+    .g-feed-item .feed-summary-item img {
+        background-color: #fff;
+        border: 1px solid #fff;
+        box-shadow: 0px 0px 1px #999;
+    }
+
+    .g-feed-item .feed-summary-item .u-item {
+        color: #0099DD;
+    }
+
+    .g-feed-item .feed-summary-item .u-items {
+        color: #0099DD;
+    }
+
+    .g-feed-item .feed-summary-item .u-text-blue {
+        color: #0099DD !important;
+    }
+
+    .g-items-pop-mask-feed .m-close {
+        background-color: #0f1419;
+        box-shadow: 0px 0px 2px #fff;
+    }
+
+    .g-items-pop-feed {
+        background-color: #0f1419;
+        box-shadow: 0px 0px 4px #fff;
+    }
+
+    .g-items-pop-feed .m-user-avatar {
+        border: 1px solid #fff;
+        box-shadow: 0px 0px 1px #999;
+        background-color: #fff;
+    }
+
+    .g-items-pop-feed .m-items-item {
+        color: #fff;
+    }
+
+    /* 推荐模块样式 */
+    .g-recommend h2 {
+        color: #fff;
+    }
+
+    .g-recommend .m-avatar .m-avatar-inner{
+        background-color: #fff;
+        border: 2px solid #fff;
+    }
+
+    .g-recommend .m-info {
+        color: #fff;
+    }
+
+    .g-recommend .m-info p {
+        color: #fff;
+    }
+
+    .g-recommend .m-follow-button{
+        background-color: #fff;
+        color: #0f1419;
+    }
+
+    .recommend-loading {
+        box-shadow: 0px 0px 4px #aaa;
+        background: #0f1419;
+    }
+
+    .discord-img {
+        color: rgb(231, 233, 234);
+        fill: currentColor;
+    }
+}

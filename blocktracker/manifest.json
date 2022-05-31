@@ -1,0 +1,46 @@
+{
+    "name": "blocktracker",
+    "description": "Explore valid Web3 signals in Twitter.",
+    "version": "1.3.1",
+    "manifest_version": 3,
+    "icons": {
+        "128": "img/associated.jpg",
+        "48": "img/associated.jpg",
+        "16": "img/associated.jpg"
+    },
+    "background": {
+        "service_worker": "js/background.js"
+    },
+    "content_scripts": [{
+        "matches": ["https://twitter.com/*"],
+        "js": [
+            "js/util.js",
+            "js/content.js",
+            "js/pushDom.js",
+            "js/homePage.js",
+            "js/recommend.js",
+            "js/recommendPop.js",
+            "js/alert.js",
+            "js/feed.js",
+            "js/addEvent.js"
+        ],
+        "css": [
+            "css/loading.css",
+            "css/content.css",
+            "css/recommend.css",
+            "css/alert.css",
+            "css/feed.css",
+            "css/dark.css"
+        ],
+        "run_at": "document_end"
+    }],
+    "permissions": [],
+    "web_accessible_resources": [{
+        "resources": ["/img/*"],
+        "matches": ["<all_urls>"]
+    }],
+    "host_permissions": [
+        "https://twitter.com/*",
+        "*://*/*"
+    ]
+}
