@@ -3,6 +3,7 @@
 Blocktracker - Follow what twitter whales trade.
 
 https://chrome.google.com/webstore/detail/blocktracker/conincoefhldfppibnhfjnljhlghjojl
+
 A chrome extension that tracks Twitter Users’ NFT transactions and provides fundamental analysis.
 
 
