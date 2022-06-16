@@ -1,21 +1,22 @@
 /**
  * background.js
  * 后台，用来请求接口
- */
+*/
 
 const resultError = {
     code: 500,
     data: {}
 };
 
-const baseUrl = 'http://api.np-cloud.com';
+const baseUrl = 'https://blocktracker.org/';
 
 /**
  * 获取所有存储的twitter用户
  */
 function getUserList() {
     return fetch(
-        `${baseUrl}/user_list`, {
+        `${baseUrl}/user_list`,
+        {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -29,7 +30,8 @@ function getUserList() {
 **/
 function getRecommendList(header, data) {
     return fetch(
-        `${baseUrl}/recommend`, {
+        `${baseUrl}/recommend`,
+        {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -45,7 +47,7 @@ function getRecommendList(header, data) {
 **/
 function getFeedList(header) {
     return fetch(
-        `${baseUrl}/feed`, // http://api.np-cloud.com/feed  ${baseUrl}/feed
+        `${baseUrl}/feed`, // http://8.219.134.241:443/api/feed  ${baseUrl}/feed
         {
             method: "GET",
             headers: {
@@ -65,7 +67,8 @@ function getFeedList(header) {
 **/
 function getSummary(data) {
     return fetch(
-        `${baseUrl}/summary`, {
+        `${baseUrl}/summary`,
+        {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -84,7 +87,8 @@ function getSummary(data) {
 **/
 function getAlert(data) {
     return fetch(
-        `${baseUrl}/alert`, {
+        `${baseUrl}/alert`,
+        {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -103,7 +107,8 @@ function getAlert(data) {
 **/
 function getProfile(data) {
     return fetch(
-        `${baseUrl}/profile`, {
+        `${baseUrl}/profile`,
+        {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -115,10 +120,11 @@ function getProfile(data) {
 
 /**
  * 请求项目数据，获取项目名称和图片地址
- **/
+**/
 function getProfileProject(token) {
     return fetch(
-        `https://api.opensea.io/api/v1/asset_contract/${token}`, {
+        `https://api.opensea.io/api/v1/asset_contract/${token}`,
+        {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -129,10 +135,11 @@ function getProfileProject(token) {
 
 /**
  * 请求item数据，获取item名称和图片地址
- */
+*/
 function getProfileProjectSingle(token, id) {
     return fetch(
-        `https://api.opensea.io/api/v1/asset/${token}/${id}`, {
+        `https://api.opensea.io/api/v1/asset/${token}/${id}`,
+        {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -142,9 +149,25 @@ function getProfileProjectSingle(token, id) {
 }
 
 /**
+    请求头像
+**/
+function getAvatar() {
+    return fetch(
+        `https://api.twitter.com/1.1/users/show.json?screen_name=timncox`,
+        {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "authorization": "Bearer AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA",
+            }
+        }
+    ).then(response => response.json())
+}
+
+/**
  * 利用promise造成休眠
  * ms:休眠毫秒数
- */
+*/
 function sleep(ms) {
     return new Promise(function(resolve, reject) {
         setTimeout(resolve, ms)
@@ -153,15 +176,15 @@ function sleep(ms) {
 
 /**
  * 获取所有用户的数据，返回结果为用户账号的数组
- */
+*/
 async function asyncAllUserList(sendResponse) {
-    let allUserRes = { data: [] }
+    let allUserRes = {data: []}
     try {
         allUserRes = await getUserList();
     } catch (error) {
         console.log('allUserRes-error', error)
     }
-
+    
     let resultTemp = {
         code: 200,
         data: allUserRes.data,
@@ -171,10 +194,10 @@ async function asyncAllUserList(sendResponse) {
 
 /**
  * 请求feed数据
- */
+*/
 async function asyncFeedList(msg, sendResponse) {
-    let { header } = msg;
-    let feedRes = { data: [] }
+    let {header} = msg;
+    let feedRes = {data: []}
     try {
         feedRes = await getFeedList(header);
     } catch (error) {
@@ -190,10 +213,10 @@ async function asyncFeedList(msg, sendResponse) {
 
 /**
  * 请求推荐数据
- */
+*/
 async function asyncRecommendList(msg, sendResponse) {
-    let { header, data } = msg;
-    let recommendRes = { data: [] }
+    let {header, data} = msg;
+    let recommendRes = {data: []}
     try {
         recommendRes = await getRecommendList(header, data);
     } catch (error) {
@@ -210,7 +233,7 @@ async function asyncRecommendList(msg, sendResponse) {
         let tId = recommendList[i];
         let item = {
             tId: tId,
-            profile: { nft_most_holding: 'none' }
+            profile: {nft_most_holding: 'none'}
         };
         let profileRes = {}
         try {
@@ -236,7 +259,7 @@ async function asyncRecommendList(msg, sendResponse) {
 
 /**
  * 请求推荐的弹窗信息
- */
+*/
 async function asyncRecommendAlert(msg, sendResponse) {
     let item = msg.cacheRecommend;
     let profileRes = {}
@@ -259,11 +282,11 @@ async function asyncRecommendAlert(msg, sendResponse) {
             }
             item.profile.image_url = profileProjectRes.image_url;
             item.profile.project_name = profileProjectRes.name;
-            item.profile.slug = profileProjectRes.collection ? .slug;
+            item.profile.slug = profileProjectRes.collection?.slug;
         }
     }
 
-    let summaryRes = { data: { action_list: [] } }
+    let summaryRes = {data:{action_list:[]}}
     try {
         summaryRes = await getSummary({
             twitter_id: item.tId,
@@ -282,7 +305,7 @@ async function asyncRecommendAlert(msg, sendResponse) {
         item.summary = [];
     }
 
-    let alertRes = { data: { alert_action: [] } }
+    let alertRes = {data:{alert_action:[]}}
     try {
         alertRes = await getAlert({
             twitter_id: item.tId,
@@ -307,8 +330,8 @@ async function asyncRecommendAlert(msg, sendResponse) {
         }
         alertItem.image_url = profileProjectRes.image_url;
         alertItem.project_name = profileProjectRes.name;
-        alertItem.slug = profileProjectRes.collection ? .slug;
-
+        alertItem.slug = profileProjectRes.collection?.slug;
+        
 
         let tokenList = alertItem.token_list;
         // if (tokenList.length > 2) {
@@ -331,23 +354,23 @@ async function asyncRecommendAlert(msg, sendResponse) {
 
 /**
  * alert和summary中显示的items，请求他们的图片信息，最多显示两个
- */
+*/
 async function asyncTokenList(token, tokenList) {
     let tList = [];
     if (tokenList.length == 1 || tokenList.length > 2) {
         tList = [tokenList[0]];
-    } else if (tokenList.length == 2) {
+    } else if(tokenList.length == 2) {
         tList = [tokenList[0], tokenList[1]];
     }
     for (let i = 0; i < tList.length; i++) {
-        let profileProjectSingleRes = { image_thumbnail_url: '' };
+        let profileProjectSingleRes = {image_thumbnail_url:''};
         try {
             profileProjectSingleRes = await getProfileProjectSingle(token, tList[i].id);
         } catch (error) {
             console.log('profileProjectSingleRes-error', error);
         }
         let profileProjectSingleResErrorLoop = 0;
-        while (profileProjectSingleRes && profileProjectSingleRes.detail == 'Request was throttled.' && profileProjectSingleResErrorLoop <= 3) { // 请求频繁
+        while (profileProjectSingleRes && profileProjectSingleRes.detail == 'Request was throttled.' && profileProjectSingleResErrorLoop <= 3) {// 请求频繁
             await sleep(500);
             try {
                 profileProjectSingleRes = await getProfileProjectSingle(token, tList[i].id);
@@ -364,10 +387,10 @@ async function asyncTokenList(token, tokenList) {
 
 /**
  * 弹窗信息请求，请求getProfile => 请求summary => 请求项目信息 => 请求items信息
- */
+*/
 async function asyncRequest(msg, sendResponse) {
-    const { twitter_id, user_id, page_index } = msg;
-    let data = { profile: { nft_most_holding: 'none' } }
+    const {twitter_id, user_id, page_index} = msg;
+    let data = {profile:{nft_most_holding: 'none'}}
 
     let profileRes = {}
     try {
@@ -389,14 +412,14 @@ async function asyncRequest(msg, sendResponse) {
             }
             data.profile.image_url = profileProjectRes.image_url;
             data.profile.project_name = profileProjectRes.name;
-            data.profile.slug = profileProjectRes.collection ? .slug;
+            data.profile.slug = profileProjectRes.collection?.slug;
         }
     } else {
         sendResponse(resultError)
         return;
     }
 
-    let summaryRes = { data: { action_list: [] } }
+    let summaryRes = {data:{action_list:[]}}
     try {
         summaryRes = await getSummary({
             twitter_id: twitter_id,
@@ -415,7 +438,7 @@ async function asyncRequest(msg, sendResponse) {
         data.summary = [];
     }
 
-    let alertRes = { data: { alert_action: [] } }
+    let alertRes = {data:{alert_action:[]}}
     try {
         alertRes = await getAlert({
             twitter_id: twitter_id,
@@ -440,7 +463,7 @@ async function asyncRequest(msg, sendResponse) {
         }
         alertItem.image_url = profileProjectRes.image_url;
         alertItem.project_name = profileProjectRes.name;
-        alertItem.slug = profileProjectRes.collection ? .slug;
+        alertItem.slug = profileProjectRes.collection?.slug;
 
         let tokenList = alertItem.token_list;
         // if (tokenList.length > 2) {
@@ -484,10 +507,10 @@ let loopSummaryIng = false;
 /**
  * 循环执行数组summaryScollRequestQueue中的数据，并且从前到后减少数组长度
  * firstItem 解决只添加了一条信息，没有触发请求的问题
- */
+*/
 async function loopSummary(firstItem) {
     loopSummaryIng = true;
-    if (firstItem) {
+    if(firstItem) {
         let queneItem = firstItem;
 
         let result = {
@@ -501,7 +524,7 @@ async function loopSummary(firstItem) {
         } catch (error) {}
 
         let profileProjectResErrorLoop = 0;
-        while (profileProjectRes && profileProjectRes.detail == 'Request was throttled.' && profileProjectResErrorLoop <= 3) { // 请求频繁
+        while(profileProjectRes && profileProjectRes.detail == 'Request was throttled.' && profileProjectResErrorLoop <= 3) {// 请求频繁
             await sleep(500);
             try {
                 profileProjectRes = await getProfileProject(queneItem.token_address);
@@ -512,7 +535,7 @@ async function loopSummary(firstItem) {
 
         result.image_url = profileProjectRes.image_url;
         result.project_name = profileProjectRes.name;
-        result.slug = profileProjectRes.collection ? .slug;
+        result.slug = profileProjectRes.collection?.slug;
         result.tokenList = queneItem.tokenList;
         await asyncTokenList(queneItem.token_address, result.tokenList);
         let resultTemp = {
@@ -536,7 +559,7 @@ async function loopSummary(firstItem) {
         } catch (error) {}
 
         let profileProjectResErrorLoop = 0;
-        while (profileProjectRes && profileProjectRes.detail == 'Request was throttled.' && profileProjectResErrorLoop <= 3) { // 请求频繁
+        while(profileProjectRes && profileProjectRes.detail == 'Request was throttled.' && profileProjectResErrorLoop <= 3) {// 请求频繁
             await sleep(500);
             try {
                 profileProjectRes = await getProfileProject(queneItem.token_address);
@@ -549,11 +572,11 @@ async function loopSummary(firstItem) {
         result.image_url = profileProjectRes.image_url;
         // 项目名称
         result.project_name = profileProjectRes.name;
-        result.slug = profileProjectRes.collection ? .slug;
+        result.slug = profileProjectRes.collection?.slug;
         result.tokenList = queneItem.tokenList;
-
+    
         await asyncTokenList(queneItem.token_address, result.tokenList);
-
+    
         let resultTemp = {
             code: 200,
             data: result
@@ -581,37 +604,37 @@ function summaryQuene(msg, sendResponse) {
         sendResponse(resultTemp);
         return;
     }
-
+    
     let queneItem = {
-            cacheId: msg.data.cacheId,
-            tid: msg.data.tid,
-            token_address: msg.data.token_address,
-            tokenList: JSON.parse(JSON.stringify(msg.data.tokenList)),
-            domId: msg.domId,
-            sendResponse: sendResponse, // 保存当前回掉函数
-        }
-        // 当前需要请求数据，push进队列
+        cacheId: msg.data.cacheId,
+        tid: msg.data.tid,
+        token_address: msg.data.token_address,
+        tokenList: JSON.parse(JSON.stringify(msg.data.tokenList)),
+        domId: msg.domId,
+        sendResponse: sendResponse, // 保存当前回掉函数
+    }
+    // 当前需要请求数据，push进队列
     summaryScollRequestQueue.push(queneItem);
 }
 
 let loopItemsIng = false;
 async function loopItems(firstItem) {
     loopItemsIng = true;
-    if (firstItem) {
+    if(firstItem) {
         let queneItem = firstItem;
         let { token, item_id } = queneItem;
 
         let result = {
             domId: queneItem.domId,
         }
-        let profileProjectSingleRes = { image_thumbnail_url: '' };
+        let profileProjectSingleRes = {image_thumbnail_url:''};
         try {
             profileProjectSingleRes = await getProfileProjectSingle(token, item_id);
         } catch (error) {
             console.log('profileProjectSingleRes-error', error);
         }
         let profileProjectSingleResErrorLoop = 0;
-        while (profileProjectSingleRes && profileProjectSingleRes.detail == 'Request was throttled.' && profileProjectSingleResErrorLoop <= 3) { // 请求频繁
+        while (profileProjectSingleRes && profileProjectSingleRes.detail == 'Request was throttled.' && profileProjectSingleResErrorLoop <= 3) {// 请求频繁
             await sleep(500);
             try {
                 profileProjectSingleRes = await getProfileProjectSingle(token, item_id);
@@ -637,14 +660,14 @@ async function loopItems(firstItem) {
         let result = {
             domId: queneItem.domId,
         }
-        let profileProjectSingleRes = { image_thumbnail_url: '' };
+        let profileProjectSingleRes = {image_thumbnail_url:''};
         try {
             profileProjectSingleRes = await getProfileProjectSingle(token, item_id);
         } catch (error) {
             console.log('profileProjectSingleRes-error', error);
         }
         let profileProjectSingleResErrorLoop = 0;
-        while (profileProjectSingleRes && profileProjectSingleRes.detail == 'Request was throttled.' && profileProjectSingleResErrorLoop <= 3) { // 请求频繁
+        while (profileProjectSingleRes && profileProjectSingleRes.detail == 'Request was throttled.' && profileProjectSingleResErrorLoop <= 3) {// 请求频繁
             await sleep(500);
             try {
                 profileProjectSingleRes = await getProfileProjectSingle(token, item_id);
@@ -685,20 +708,20 @@ function itemsQuene(msg, sendResponse) {
     }
 
     let queneItem = {
-            token: msg.data.token,
-            item_id: msg.data.item_id,
-            domId: msg.domId,
-            sendResponse: sendResponse, // 保存当前回掉函数
-        }
-        // 当前需要请求数据，push进队列
+        token: msg.data.token,
+        item_id: msg.data.item_id,
+        domId: msg.domId,
+        sendResponse: sendResponse, // 保存当前回掉函数
+    }
+    // 当前需要请求数据，push进队列
     itemsScollRequestQueue.push(queneItem);
 }
 
 // 监听来自content.js的消息
 chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
-    if (msg.messageType == 'allUserList') {
+    if(msg.messageType == 'allUserList') {
         asyncAllUserList(sendResponse);
-    } else if (msg.messageType == 'init') {
+    } else if(msg.messageType == 'init') {
         asyncRequest(msg, sendResponse);
     } else if (msg.messageType == 'summary' || msg.messageType == 'clearSummary') {
         summaryQuene(msg, sendResponse);
@@ -710,7 +733,9 @@ chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
         asyncFeedList(msg, sendResponse);
     } else if (msg.messageType == 'recommendAlert') {
         asyncRecommendAlert(msg, sendResponse);
+    } else if (msg.messageType == 'avatarUrl') {
+        asyncRecommendAlert(msg, sendResponse);
     }
-
+    
     return true;
 })

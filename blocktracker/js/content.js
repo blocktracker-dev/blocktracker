@@ -88,6 +88,9 @@ function getPageInfo() {
     if(document.querySelector('div[aria-label^="Account"]') && Array.from(document.querySelector('div[aria-label^="Account"]').querySelectorAll('span'))) {
         uids = Array.from(document.querySelector('div[aria-label^="Account"]').querySelectorAll('span')).find(el => el.textContent.includes('@'))
     }
+    if(document.querySelector('div[aria-label^="账号菜单"]') && Array.from(document.querySelector('div[aria-label^="账号菜单"]').querySelectorAll('span'))) {
+        uids = Array.from(document.querySelector('div[aria-label^="账号菜单"]').querySelectorAll('span')).find(el => el.textContent.includes('@'))
+    }
     pageInfo.tid = tid;
     pageInfo.uid = uids ? uids.innerHTML.split('@')[1] : '';
     return true;
@@ -261,8 +264,8 @@ let timerInner; // loopTimeline 定时器
 */
 function loopTimeline() {
     timerInner = setTimeout(() => {
-        let timelineList = document.querySelectorAll(`div[aria-label^="Timeline"]>div>div`);
-        let avatarWrapperList = document.querySelectorAll(`div[aria-label^="Timeline"] div[class="css-1dbjc4n r-1awozwy r-1hwvwag r-18kxxzh r-1b7u577"]`);
+        let timelineList = [...document.querySelectorAll(`div[aria-label^="Timeline"]>div>div`), ...document.querySelectorAll(`div[aria-label^="时间线"]>div>div`)];
+        let avatarWrapperList = [...document.querySelectorAll(`div[aria-label^="Timeline"] div[class="css-1dbjc4n r-1awozwy r-1hwvwag r-18kxxzh r-1b7u577"]`), ...document.querySelectorAll(`div[aria-label^="时间线"] div[class="css-1dbjc4n r-1awozwy r-1hwvwag r-18kxxzh r-1b7u577"]`)];
         // avatarWrapperList一开始渲染时，用户头像dom有可能为空,
         // 所以要判断timeline出现并且头像dom也出现，才对头像做标识
         if (timelineList && timelineList.length > 0 && avatarWrapperList && avatarWrapperList.length > 0) {
@@ -279,7 +282,7 @@ function loopTimeline() {
 */
 function handleScrollTimeline() {
     window.addEventListener('scroll', () => {
-        let timelineList = document.querySelectorAll(`div[aria-label^="Timeline"]>div>div`);
+        let timelineList = [...document.querySelectorAll(`div[aria-label^="Timeline"]>div>div`), ...document.querySelectorAll(`div[aria-label^="时间线"]>div>div`)];
         if(timelineList && timelineList.length > 0) {
             marksLoggedUsers(timelineList);
         }
@@ -293,7 +296,7 @@ let whoToFollowTimer = null;
 */
 function loopWhoToFollow(userId) {
     whoToFollowTimer = setTimeout(() => {
-        let whoToFollow = document.querySelector(`aside[aria-label^="Who to follow"]`);
+        let whoToFollow = document.querySelector(`aside[aria-label^="Who to follow"]`) || document.querySelector(`aside[aria-label^="推荐关注"]`);
         let UserCellList;
         if(whoToFollow) {
             UserCellList = whoToFollow.querySelectorAll(`div[data-testid="UserCell"]`);
@@ -316,7 +319,9 @@ let userIdTimer = null;
 */
 function loopUserId() {
     userIdTimer = setTimeout(() => {
-        let user = document.querySelector(`div[aria-label^="Account"] div[dir="ltr"]>span[class="css-901oao css-16my406 r-poiln3 r-bcqeeo r-qvutc0"]`);
+        let user = 
+        document.querySelector(`div[aria-label^="Account"] div[dir="ltr"]>span[class="css-901oao css-16my406 r-poiln3 r-bcqeeo r-qvutc0"]`) 
+        || document.querySelector(`div[aria-label^="账号菜单"] div[dir="ltr"]>span[class="css-901oao css-16my406 r-poiln3 r-bcqeeo r-qvutc0"]`);
         if (user && (user.innerHTML.indexOf('@') != -1)) {
             clearTimeout(userIdTimer);
             let userId = user.innerHTML.replace('@','');
@@ -364,7 +369,7 @@ let navTimer = null;
 */
 function loopNav(uid) {
     navTimer = setTimeout(() => {
-        let nav = document.querySelector(`nav[aria-label="Primary"]`);
+        let nav = document.querySelector(`nav[aria-label="Primary"]`) || document.querySelector(`nav[aria-label="主要"]`);
         if (nav) {
             navTimer = clearTimeout(navTimer);
             ajaxFeed(uid, nav);
@@ -430,6 +435,10 @@ function marksLoggedUsers(domList) {
             searchDom = domItem.querySelectorAll(`div[class="css-1dbjc4n r-1hwvwag r-18kxxzh r-1777fci r-1b7u577"]`);
             showAlert = false;
         }
+        if(domItem.parentNode && domItem.parentNode.parentNode && domItem.parentNode.parentNode.getAttribute('aria-label') == '推荐关注') {
+            searchDom = domItem.querySelectorAll(`div[class="css-1dbjc4n r-1hwvwag r-18kxxzh r-1777fci r-1b7u577"]`);
+            showAlert = false;
+        }
         searchDom.forEach(searchDomItem => {
             let aLink = searchDomItem.querySelectorAll(`a[href^="/"]`);
             aLink.forEach(element => {
@@ -445,6 +454,9 @@ function marksLoggedUsers(domList) {
                     }
                     // 如果是推荐模块，请求收益率数据
                     if(domItem.parentNode && domItem.parentNode.parentNode && domItem.parentNode.parentNode.getAttribute('aria-label') == 'Who to follow') {
+                        profileRate(idTemp, searchDomItem);
+                    }
+                    if(domItem.parentNode && domItem.parentNode.parentNode && domItem.parentNode.parentNode.getAttribute('aria-label') == '推荐关注') {
                         profileRate(idTemp, searchDomItem);
                     }
                 }
