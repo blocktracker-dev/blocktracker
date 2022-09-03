@@ -8,7 +8,7 @@ const resultError = {
     data: {}
 };
 
-const baseUrl = 'https://api.blocktracker.org/api';
+const baseUrl = 'https://blocktracker.org/';
 
 /**
  * 获取所有存储的twitter用户
@@ -47,7 +47,7 @@ function getRecommendList(header, data) {
 **/
 function getFeedList(header) {
     return fetch(
-        `${baseUrl}/feed`, // http://8.219.134.241:443/api/feed  ${baseUrl}/feed
+        `${baseUrl}/feed`, // https://blocktracker.org/  ${baseUrl}/feed
         {
             method: "GET",
             headers: {
